@@ -12,9 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Slate',
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-      ),
       home: const MyHomePage(title: 'Slate Home Page'),
     );
   }
@@ -39,18 +36,49 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          children: [
-            Text("This is my home page"),
-          ],
-        )
-      )
-    );
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Color.fromARGB(255, 149, 207, 210),
+            body: Center(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image.asset('assets/images/logo.jpg'),
+                Padding(
+                    padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                    child: Center(
+                        child: ElevatedButton(
+                      onPressed: _incrementCounter,
+                      child: Text(
+                        "Start Scanning",
+                        style: TextStyle(fontSize: 25),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.purple),
+                    ))),
+                Row(
+                  children: [
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(30, 150, 10, 10),
+                        child: Container(
+                          width: 44.0,
+                          height: 44.0,
+                          child: Image.asset(
+                            'assets/images/caution.png',
+                            width: 50,
+                            height: 50,
+                          ),
+                        )),
+                    Padding(
+                        padding: EdgeInsets.fromLTRB(0, 150, 10, 10),
+                        child: Container(
+                          child: Text(
+                              "If you are currently facing any serious symptoms \n such as loss of breath, loss of sense, \n or are falling unconcious, call 911 immediately"),
+                        )),
+                  ],
+                )
+              ],
+            ))));
   }
 }
 
