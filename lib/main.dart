@@ -48,7 +48,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                     child: Center(
                         child: ElevatedButton(
-                      onPressed: _incrementCounter,
+                        onPressed: () {
+                        Navigator.push(
+                          context, MaterialPageRoute(builder: (context) => const SecondPage(title: "Scanning Page"))
+                        );
+                      },
                       child: Text(
                         "Start Scanning",
                         style: TextStyle(fontSize: 25),
