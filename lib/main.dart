@@ -3,49 +3,43 @@ import 'dart:io';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
-Future<void> main() async {
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final cameras = await availableCameras();
   final firstCamera = cameras.first;
-  runApp(const MyApp());
+  runApp(MyApp(ncamera: firstCamera));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({super.key, required this.ncamera});
   // This widget is the root of your application.
+  final CameraDescription ncamera; 
   @override
   Widget build(BuildContext context) {
 
     return MaterialApp(
       title: 'Slate',
-      home: const MyHomePage(),
+      home: MyHomePage(camera: ncamera),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
-
+  const MyHomePage({super.key, required this.camera});
+  final CameraDescription camera;
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
+  
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
             backgroundColor: Color.fromARGB(255, 149, 207, 210),
             body: Center(
-                child: Column(
+              child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Image.asset('assets/images/logo.jpg'),
@@ -55,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: ElevatedButton(
                         onPressed: () {
                         Navigator.push(
-                          context, MaterialPageRoute(builder: (context) => const SecondPage(title: "Scanning Page"))
+                          context, MaterialPageRoute(builder: (context) => MaterialApp(home: CameraPage(camera: widget.camera)))
                         );
                       },
                       child: Text(
@@ -68,7 +62,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 Row(
                   children: [
                     Padding(
-                        padding: EdgeInsets.fromLTRB(30, 150, 10, 10),
+                        padding: EdgeInsets.fromLTRB(30, 150, 10, 0),
                         child: Container(
                           width: 44.0,
                           height: 44.0,
@@ -78,12 +72,19 @@ class _MyHomePageState extends State<MyHomePage> {
                             height: 50,
                           ),
                         )),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(0, 150, 10, 10),
-                        child: Container(
-                          child: Text(
-                              "If you are currently facing any serious symptoms \n such as loss of breath, loss of sense, \n or are falling unconcious, call 911 immediately"),
-                        )),
+                    // Padding(
+                    //     padding: EdgeInsets.fromLTRB(0, 150, 0, 10),
+                    //     child: Container(
+                    //       child: Text(
+                    //           "If you are currently facing any serious symptoms \n such as loss of breath, loss of sense, \n or are falling unconcious, call 911 immediately",
+                    //           ),
+                    //     )),
+                    //   Padding(
+                    //     padding: EdgeInsets.fromLTRB(0, 150, 0, 10),
+                    //     child: Container(
+                    //       child: Text(
+                    //           "Thank you to the HAM10000 Database for helping make this possible"),
+                    //     ))
                   ],
                 )
               ],
@@ -107,6 +108,9 @@ class SecondPage extends StatelessWidget {
     );
   }
 }
+
+
+
 
 class CameraPage extends StatefulWidget {
   const CameraPage({
